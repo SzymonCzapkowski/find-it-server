@@ -21,7 +21,7 @@ const Project = mongoose.model('Project', new mongoose.Schema({
     },
     places: {
         type: mongoose.ObjectId, 
-        ref: Place,
+        ref: 'Place',
     },
     createDate: {
         type: Date, 
@@ -34,7 +34,6 @@ function validateProject(project) {
         name: Joi.string().min(3).max(255).required(),
         description: Joi.string().min(3).max(255).required(),
         category: Joi.string().valid(['JavaScript', 'Java', 'HTML', 'CSS', 'REACT']).required(),
-        createDate: Joi.Date()
     });
     return Joi.validate(project,schema)
 }

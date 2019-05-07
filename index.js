@@ -2,6 +2,7 @@ const config = require('config');
 const mongoose = require('mongoose');
 const express = require('express');
 const app = express();
+const project = require('./routes/projects')
 
 
 app.use(function(req, res, next) {
@@ -28,8 +29,10 @@ app.use((req, res, next) => {
 
 mongoose.set('useCreateIndex', true);
 mongoose.set('useFindAndModify', false);
+mongoose.set('useNewUrlParser', true )
 
 app.use(express.json());
+app.use('/', project);
 
 const port = process.env.PORT || 3000;
 app.listen(port, () => console.log(`Listening on port ${port}...`));
