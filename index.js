@@ -2,6 +2,8 @@ const config = require('config');
 const mongoose = require('mongoose');
 const express = require('express');
 const app = express();
+const users = require('./routes/users');
+const auth = require('./routes/auth');
 
 
 app.use(function(req, res, next) {
@@ -15,7 +17,7 @@ app.use(function(req, res, next) {
 if (!config.get('myPrivateKey')) {
     console.error('FATAL ERROR: myPrivateKey is not defined');
     process.exit(1);
-};
+}
 
 app.use((req, res, next) => {
     console.log('use for mongoose callback');
@@ -30,6 +32,8 @@ mongoose.set('useCreateIndex', true);
 mongoose.set('useFindAndModify', false);
 
 app.use(express.json());
+app.use('/', users);
+app.use('/', auth);
 
 const port = process.env.PORT || 3000;
 app.listen(port, () => console.log(`Listening on port ${port}...`));

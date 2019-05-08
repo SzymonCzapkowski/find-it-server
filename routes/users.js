@@ -44,7 +44,9 @@ router.post('/api/users/register', async(req, res) => {
             username: user.username,
             email: user.email
         });
-    }););
+    }
+
+});
 
 
 
