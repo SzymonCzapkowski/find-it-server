@@ -32,7 +32,7 @@ mongoose.set('useFindAndModify', false);
 mongoose.set('useNewUrlParser', true )
 
 app.use(express.json());
-app.use('/', project);
+app.use('/api/projects/', project);
 
 const port = process.env.PORT || 3000;
 app.listen(port, () => console.log(`Listening on port ${port}...`));

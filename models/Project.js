@@ -20,7 +20,7 @@ const Project = mongoose.model('Project', new mongoose.Schema({
         required: true,
     },
     places: {
-        type: mongoose.ObjectId, 
+        type: mongoose.Schema.Types.ObjectId, 
         ref: 'Place',
     },
     createDate: {
