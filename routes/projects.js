@@ -19,7 +19,7 @@ router.post('/', async (req, res) => {
         name: req.body.name,
         description: req.body.description,
         category: req.body.category,
-        places: new mongoose.Types.ObjectId,
+        places: req.body.places
     });
     const result = await newProject.save();
     res.send(result)
@@ -29,15 +29,15 @@ router.post('/', async (req, res) => {
 router.get('/', async (req,res) => {
     if(req.body['_id']) {
         const project = await Project.find({_id:req.body['_id']})
+        // .populate('places')
         res.send(project)
     } else if (req.body['category']) {
         const project = await Project.find({category:req.body['category']})
-        res.send(project)
-    } else if (req.body['places']) {
-        const project = await Project.find({places:req.body['places']})
+        // .populate('places')
         res.send(project)
     } else {
         const project = await Project.find({})
+        // .populate('places')
         res.send(project)
     }
 })

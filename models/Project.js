@@ -19,10 +19,10 @@ const Project = mongoose.model('Project', new mongoose.Schema({
         enum: ['JavaScript', 'Java', 'HTML', 'CSS', 'REACT'],
         required: true,
     },
-    places: {
+    places: [{
         type: mongoose.Schema.Types.ObjectId, 
         ref: 'Place',
-    },
+    }],
     createDate: {
         type: Date, 
         default: Date.now,
