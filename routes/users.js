@@ -52,49 +52,6 @@ router.post('/register', async(req, res) => {
 
 });
 
-//get users
-
-
-//get all users
-router.get('/', (req, res) => {
-    res.send(users);
-});
-
-
-//get user by ID
-router.get('/:id', async(req, res) => {
-    const user = await users.find({ _id: req.body._id });
-    if (!user) return res.status(404).send('The user with the given ID was not found.');
-    res.send(user);
-});
-
-//add Skills
-router.patch('/:id/addSkill', (req, res) => {
-    const { error } = validateSkill(req.body);
-    if (error) return res.status(400).send(error.details[0].message);
-    const skills = [];
-
-    const skill = {
-        id: skills.length + 1,
-        name: req.body.name
-    };
-    skills.push(skill);
-    res.send(skill);
-});
-
-
-//delete Skills
-router.delete('/:id/deleteSkill', (req, res) => {
-    const skill = skills.find({
-        _id: req.body._id
-    });
-    if (!skill) return res.status(404).send('The skill with the given ID was not found.');
-
-    const index = skills.indexOf(skill);
-    skills.splice(index, 1);
-
-    res.send(skill);
-});
 
 
 
