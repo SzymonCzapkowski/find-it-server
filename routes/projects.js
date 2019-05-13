@@ -27,12 +27,12 @@ router.post('/', async (req, res) => {
 
 ///////Get Projects///////
 router.get('/', async (req,res) => {
-    if(req.body['_id']) {
-        const project = await Project.find({_id:req.body['_id']})
+    if(req.query['_id']) {
+        const project = await Project.find({_id:req.query['_id']})
         // .populate('places')
         res.send(project)
-    } else if (req.body['category']) {
-        const project = await Project.find({category:req.body['category']})
+    } else if (req.query['category']) {
+        const project = await Project.find({category:req.query['category']})
         // .populate('places')
         res.send(project)
     } else {
