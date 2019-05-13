@@ -38,7 +38,7 @@ mongoose.set('useNewUrlParser', true);
 
 app.use(express.json());
 
-app.use('/api/projects/', project); //od mateusza
+app.use('/api/projects/', project);
 
 app.use('/api/places', places);
 

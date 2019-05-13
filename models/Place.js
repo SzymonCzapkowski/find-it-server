@@ -1,5 +1,6 @@
 const Joi = require('joi');
 const mongoose = require('mongoose');
+const axios = require('axios');
 
 const Place = mongoose.model('Place', new mongoose.Schema({
     name:{
@@ -27,11 +28,11 @@ const Place = mongoose.model('Place', new mongoose.Schema({
 function validatePlace(place) {
     const schema = Joi.object().keys({
         name: Joi.string().required(),
-        requiredSkills: Joi.string().required(),
-        status: Joi.string().default(false),
+        requiredSkills: Joi.array().required(),
+        status: Joi.boolean().default(false),
     })
     return Joi.validate(place, schema)
-}
+};
 
 exports.Place = Place;
 exports.validatePlace = validatePlace;
