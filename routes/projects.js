@@ -51,7 +51,7 @@ router.put('/:_id', async (req,res) => {
         const schema = Joi.object().keys({
             name: Joi.string().min(3).max(255),
             description: Joi.string().min(3).max(255),
-            category: Joi.string().valid(['JavaScript', 'Java', 'HTML', 'CSS', 'REACT']),
+            category: Joi.string().valid(['frontend', 'java', 'nodeJS', 'python', '.NET']),
         });
         return Joi.validate(project,schema)
     }(req.body))

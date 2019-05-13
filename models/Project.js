@@ -8,6 +8,10 @@ const Project = mongoose.model('Project', new mongoose.Schema({
         maxlength: 255,
         required: true,
     },
+    author: {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'User'
+    },
     description: {
         type: String,
         minlength: 3,
@@ -16,7 +20,7 @@ const Project = mongoose.model('Project', new mongoose.Schema({
     },
     category: {
         type: String,
-        enum: ['JavaScript', 'Java', 'HTML', 'CSS', 'REACT'],
+        enum: ['frontend', 'java', 'nodeJS', 'python', '.NET'],
         required: true,
     },
     places: [{
@@ -33,10 +37,10 @@ function validateProject(project) {
     const schema = Joi.object().keys({
         name: Joi.string().min(3).max(255).required(),
         description: Joi.string().min(3).max(255).required(),
-        category: Joi.string().valid(['JavaScript', 'Java', 'HTML', 'CSS', 'REACT']).required(),
+        category: Joi.string().valid(['frontend', 'java', 'nodeJS', 'python', '.NET']).required(),
     });
     return Joi.validate(project,schema)
-}
+}1
 
 exports.Project = Project;
 exports.validateProject = validateProject;
