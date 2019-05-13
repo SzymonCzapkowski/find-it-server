@@ -31,9 +31,10 @@ app.use((req, res, next) => {
 mongoose.set('useCreateIndex', true);
 mongoose.set('useFindAndModify', false);
 
+
 app.use(express.json());
-app.use('/', users);
-app.use('/', auth);
+app.use('/api/users', users);
+app.use('/api/auth', auth);
 
 const port = process.env.PORT || 3000;
 app.listen(port, () => console.log(`Listening on port ${port}...`));
