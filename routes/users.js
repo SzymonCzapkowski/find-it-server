@@ -2,7 +2,9 @@ const auth = require("../middleware/auth");
 const mongoose = require('mongoose');
 const bcrypt = require('bcrypt');
 const express = require('express');
-const jwt_decode = require('jwt-decode')
+const jwt_decode = require('jwt-decode');
+const config = require('config')
+const jwt = require('jsonwebtoken');
 const router = express.Router();
 const {
     User,
@@ -36,10 +38,10 @@ router.post('/register', async(req, res) => {
         const salt = await bcrypt.genSalt(10);
         user.password = await bcrypt.hash(user.password, salt);
         await user.save();
-        res.send(user);
 
-
-        const token = user.generateAuthToken();
+        const token = jwt.sign({
+            _id: user._id
+        }, config.get('myPrivateKey'));
         res.header("x-auth-token", token).send({
             _id: user._id,
             name: user.name,
@@ -52,15 +54,6 @@ router.post('/register', async(req, res) => {
 
 //get users
 
-const users = [{
-        id: 1,
-        name: 'Adam'
-    },
-    {
-        id: 2,
-        name: 'Ewa'
-    },
-];
 
 //get all users
 router.get('/', (req, res) => {
@@ -69,8 +62,8 @@ router.get('/', (req, res) => {
 
 
 //get user by ID
-router.get('/:id', (req, res) => {
-    const user = users.find(c => c.id === parseInt(req.params.id));
+router.get('/:id', async(req, res) => {
+    const user = await users.find({ _id: req.body._id });
     if (!user) return res.status(404).send('The user with the given ID was not found.');
     res.send(user);
 });
@@ -92,7 +85,9 @@ router.patch('/:id/addSkill', (req, res) => {
 
 //delete Skills
 router.delete('/:id/deleteSkill', (req, res) => {
-    const skill = skills.find(c => c.id === parseInt(req.params.id));
+    const skill = skills.find({
+        _id: req.body._id
+    });
     if (!skill) return res.status(404).send('The skill with the given ID was not found.');
 
     const index = skills.indexOf(skill);
