@@ -2,6 +2,7 @@ const mongoose = require('mongoose');
 const express = require('express');
 const router = express.Router();
 const Joi = require('joi');
+// const auth = require("../middleware/auth");
 
 const {
     Project,
@@ -67,8 +68,8 @@ router.put('/:_id', async (req,res) => {
 })
 
 ///////Delete Projects///////
-router.delete('/:_id', async (req,res) => {
-    const project = await Project.findByIdAndDelete(req.params['_id'])
+router.delete('/', async (req,res) => {
+    const project = await Project.findByIdAndDelete(req.query._id)
     res.send(project)
 })
 
