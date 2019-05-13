@@ -40,7 +40,7 @@ function validateProject(project) {
         category: Joi.string().valid(['frontend', 'java', 'nodeJS', 'python', '.NET']).required(),
     });
     return Joi.validate(project,schema)
-}1
+}
 
 exports.Project = Project;
 exports.validateProject = validateProject;
