@@ -2,16 +2,19 @@ const auth = require("../middleware/auth");
 const mongoose = require('mongoose');
 const bcrypt = require('bcrypt');
 const express = require('express');
+const jwt_decode = require('jwt-decode');
+const config = require('config')
+const jwt = require('jsonwebtoken');
 const router = express.Router();
 const {
     User,
     validateUser
-} = require('../models/user');
+} = require('../models/User');
 
 
 
 //registration
-router.post('/api/users/register', async(req, res) => {
+router.post('/register', async(req, res) => {
     console.log(req);
     const {
         error
@@ -24,7 +27,7 @@ router.post('/api/users/register', async(req, res) => {
         email: req.body.email
     });
     if (user) {
-        return res.status(400).send('That user already exisits!');
+        return res.status(400).send('That user already exists!');
     } else {
         user = new User({
             name: req.body.name,
@@ -36,15 +39,20 @@ router.post('/api/users/register', async(req, res) => {
         user.password = await bcrypt.hash(user.password, salt);
         await user.save();
 
-
-        const token = user.generateAuthToken();
+        const token = jwt.sign({
+            _id: user._id
+        }, config.get('myPrivateKey'));
         res.header("x-auth-token", token).send({
             _id: user._id,
             name: user.name,
             username: user.username,
             email: user.email
         });
-    }););
+    }
+
+});
+
+
 
 
 

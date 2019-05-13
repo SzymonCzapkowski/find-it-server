@@ -43,18 +43,23 @@ const UserSchema = new mongoose.Schema({
     },
     city: {
         type: String
+    },
+    country: {
+        type: String
     }
 
 });
+
 
 UserSchema.methods.generateAuthToken = function() {
     const token = jwt.sign({
         _id: this._id,
     }, config.get('myPrivateKey')); //get the private key from the config file -> environment variable
     return token;
-}
+};
 
 const User = mongoose.model('User', UserSchema);
+
 
 function validateUser(user) {
     const schema = {
