@@ -1,6 +1,5 @@
 const Joi = require('joi');
 const mongoose = require('mongoose');
-const axios = require('axios');
 
 const Place = mongoose.model('Place', new mongoose.Schema({
     name:{
