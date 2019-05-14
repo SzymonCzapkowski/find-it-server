@@ -78,12 +78,11 @@ router.get('/:id', async(req, res) => {
 
 });
 
-// add Skills
-router.patch('/:id/addSkill', async(req, res) => {
+// update Skills
+router.patch('/:id/updateSkill', async(req, res) => {
 
-    const user = await User.findById(req.body.UserId);
+
     const skill = await User.findByIdAndUpdate(req.params.id, {
-        User: user,
         skills: req.body.skills,
     }, {
         new: true
@@ -92,11 +91,6 @@ router.patch('/:id/addSkill', async(req, res) => {
     res.send(skill);
 });
 
-/* delete Skills
-router.delete('/:id/deleteSkill', async(req, res) => {
 
-    
-});
-*/
 
 module.exports = router;
