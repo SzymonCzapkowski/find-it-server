@@ -7,7 +7,7 @@ const auth = require("../middleware/auth");
 const {
     Project,
     validateProject
-} = require('../models/project');
+} = require('../models/Project');
 
 ///////Create Project///////
 router.post('/', auth, async (req, res) => {
