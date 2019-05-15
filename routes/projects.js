@@ -27,7 +27,7 @@ router.post('/', auth, async (req, res) => {
 })
 
 ///////Get Projects///////
-router.get('/', auth, async (req,res) => {
+router.get('/', async (req,res) => {
     if(req.query['_id']) {
         const project = await Project.find({_id:req.query['_id']})
             .populate('places').populate('author', 'username')
