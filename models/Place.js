@@ -14,10 +14,10 @@ const Place = mongoose.model('Place', new mongoose.Schema({
         type: mongoose.Schema.Types.ObjectId,
         ref: 'Project',
     },
-    requiredSkills:[{
+    requiredSkills: {
         type: String,
         required: true
-    }],
+    },
     status:{
         type: Boolean,
         default: false,
@@ -27,7 +27,7 @@ const Place = mongoose.model('Place', new mongoose.Schema({
 function validatePlace(place) {
     const schema = Joi.object().keys({
         name: Joi.string().required(),
-        requiredSkills: Joi.array().required(),
+        requiredSkills: Joi.string().required(),
         status: Joi.boolean().default(false),
     })
     return Joi.validate(place, schema)

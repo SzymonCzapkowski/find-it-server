@@ -16,7 +16,7 @@ router.post('/', async (req, res) => {
 
     const place = new Place({
         name: req.body.name,
-        requiredSkills: req.body.skills
+        requiredSkills: req.body.requiredSkills
     })
 
     const result = await place.save();
