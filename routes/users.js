@@ -1,5 +1,5 @@
-const auth = require("../middleware/auth");
 const mongoose = require('mongoose');
+const auth = require('../middleware/auth');
 const bcrypt = require('bcrypt');
 const express = require('express');
 const jwt_decode = require('jwt-decode');
@@ -51,6 +51,46 @@ router.post('/register', async(req, res) => {
     }
 
 });
+
+// getting users
+
+router.get('/', (req, res) => {
+    User.find({}, (err, users) => {
+        if (err) {
+            res.send('Something went wrong');
+            next();
+        };
+        res.send(users);
+    });
+});
+
+
+//getting user by id
+
+router.get('/:id', async(req, res) => {
+    const userFound = await User.findById(req.params.id);
+    if (!userFound) {
+        res.status(404).send('The user with given ID does not exist');
+        return;
+    }
+
+    res.send(userFound);
+
+});
+
+// update Skills
+router.patch('/:id/updateSkill', async(req, res) => {
+
+
+    const skill = await User.findByIdAndUpdate(req.params.id, {
+        skills: req.body.skills,
+    }, {
+        new: true
+    });
+
+    res.send(skill);
+});
+
 
 
 

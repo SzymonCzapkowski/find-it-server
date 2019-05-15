@@ -7,6 +7,7 @@ const router = express.Router();
 const { User } = require('../models/User');
 
 
+
 //login 
 router.post('/login', async(req, res) => {
     const {
@@ -44,5 +45,6 @@ function validate(req) {
     return Joi.validate(req, schema);
 
 }
+
 
 module.exports = router;

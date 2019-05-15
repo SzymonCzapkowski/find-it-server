@@ -29,9 +29,9 @@ const UserSchema = new mongoose.Schema({
         minlength: 5,
         maxlength: 255
     },
-    skills: {
-        type: Array
-    },
+    skills: [{
+        type: String
+    }],
     gitHub: {
         type: String
     },
