@@ -2,7 +2,7 @@ const mongoose = require('mongoose');
 const express = require('express');
 const router = express.Router();
 const Joi = require('joi');
-// const auth = require("../middleware/auth");
+const auth = require("../middleware/auth");
 
 const {
     Project,
@@ -10,7 +10,7 @@ const {
 } = require('../models/project');
 
 ///////Create Project///////
-router.post('/', async (req, res) => {
+router.post('/', auth, async (req, res) => {
     const {
         error
     } = validateProject(req.body);
@@ -27,24 +27,24 @@ router.post('/', async (req, res) => {
 })
 
 ///////Get Projects///////
-router.get('/', async (req,res) => {
+router.get('/', auth, async (req,res) => {
     if(req.query['_id']) {
         const project = await Project.find({_id:req.query['_id']})
-        // .populate('places')
+            .populate('places').populate('author', 'username')
         res.send(project)
     } else if (req.query['category']) {
         const project = await Project.find({category:req.query['category']})
-        // .populate('places')
+            .populate('places').populate('author', 'username')
         res.send(project)
     } else {
         const project = await Project.find({})
-        // .populate('places')
+            .populate('places').populate('author', 'username')
         res.send(project)
     }
 })
 
 ///////Edit Projects///////
-router.put('/:_id', async (req,res) => {
+router.put('/:_id', auth, async (req,res) => {
     const value = await Project.find({_id:req.params['_id']})
 
     const {error} = (function (project) {
@@ -68,7 +68,7 @@ router.put('/:_id', async (req,res) => {
 })
 
 ///////Delete Projects///////
-router.delete('/', async (req,res) => {
+router.delete('/', auth, async (req,res) => {
     const project = await Project.findByIdAndDelete(req.query._id)
     res.send(project)
 })
